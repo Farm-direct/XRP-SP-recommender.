@@ -9,8 +9,8 @@ export class AboutService {
 
 
     public getHistory(): Observable<any> {
-        return this.http.get('http://localhost:1111/history').map((response:any) => {
-            return response["a"];
+        return this.http.get('http://localhost:4000/history').map((response:any) => {
+            return response.json();
         });
     }
 
