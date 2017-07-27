@@ -1,16 +1,21 @@
-<p>Angular Seed is a starter project that implements best practices in coding, building and testing Angular apps.</p>
+<form name="form" (ngSubmit)="authentication()" >
+  <br>
+  <br>
+  <div class="container">
+    <label><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="userName" [(ngModel)]=userName required>
+  </div>
+  <br>
+ 
+  <div>
+    <label><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="password" [(ngModel)]=password required  >
+ <br>
+    <button style="margin-left: 125px; margin-top: 20px;" >Login</button>
+  </div>
+</form>
 
-<h2 i18n>Features</h2>
-<ul>
-  <li>Ready to go, statically typed build system using Gulp for working with TypeScript.</li>
-  <li>Production and development builds.</li>
-  <li>Sample unit tests with Jasmine and Karma including code coverage via Istanbul.</li>
-  <li>End-to-end tests with Protractor.</li>
-  <li>Development server with live reload.</li>
-  <li>TypeScript definition management using Types.</li>
-  <li>Basic Service Worker, which implements "Cache then network strategy".</li>
-  <li>asdlfa sldfj</li>
-  <ul>faskdf ahf as f</ul>
-  <li>df gjsd fjsh </li>
-  <li>{{buyingHistory}}</li>
-</ul>
+<div>
+ username : {{userName}}<br>
+ password:{{password}}
+  </div>
