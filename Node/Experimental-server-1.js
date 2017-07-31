@@ -9,36 +9,36 @@ var app = express();
 
 app.use(bodyParser.json());
 
-app.get('/history', function (req, res, next) {
+//Cross orgin issue
+app.use(function (req, res, next) {
+
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token, x-access-session,Pragma");
   res.header('Access-Control-Expose-Headers', 'x-access-token,Pragma,x-access-session');
-  console.log(req.headers);
+
+
+  next();
+
+});
+
+
+app.get('/history', function (req, res, next) {
   res.json({
     'username': 'asd',
     'password': '123'
   })
 });
 
-app.post('/xrp', function (req, res) {
-  //res.setHeader('Content-Type', 'application/json');
-  //res.send("request: ", req.body);
+app.post('/xrp', function (req, res, next) {
   console.log("request: ", req.body);
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, x-access-token, x-access-session,Pragma");
-  res.header('Access-Control-Expose-Headers', 'x-access-token,Pragma,x-access-session');
   var Details = ["quantity", "xrpPerBuyingPrice", "totalBuyingCost", "profit", "totalSellingcost", "xrpPerSellingPrice"];
-  /**
-   * To-do:Change the Details.* to necessary object 
-   */
   var totalBuyingCost = 0, totalSellingcost = 0, xrpPerSellingPrice = 0.0;
   var profit = (req.body.profit)*1;
-   totalBuyingCost = (req.body.quantity * req.body.xrpPerBuyingPrice) + ((req.body.quantity * req.body.xrpPerBuyingPrice) * 0.1);
-   totalSellingcost = (totalBuyingCost + (req.body.profit*1) )+(((totalBuyingCost + (req.body.profit*1))) * 0.1);
-   xrpPerSellingPrice = (totalSellingcost*1) / (req.body.quantity*1);
-  //console.log(typeof profit);
+   totalBuyingCost = ((req.body.quantity * req.body.xrpPerBuyingPrice) )+ ((req.body.quantity * req.body.xrpPerBuyingPrice) * 0.01);
+   totalSellingcost = (totalBuyingCost + (req.body.profit*1) )+(((totalBuyingCost + (req.body.profit*1))) * 0.01);
+   xrpPerSellingPrice = (((totalSellingcost*1) / (req.body.quantity*1)).toFixed(2))*1;
+  
    var response = {
      "quantity": req.body.quantity,
      "xrpPerBuyingPrice": req.body.xrpPerBuyingPrice,
@@ -49,14 +49,6 @@ app.post('/xrp', function (req, res) {
    }
   res.send(response)
 })
-app.use(function (req, res, next) {
-  console.log(req.headers);
-
-  res.writeHead(200, { 'Content-Type': 'text/html' });
-  //res.end('<html><body><h1>Hello World</h1></body></html>');
-
-});
-
 
 var server = http.createServer(app);
 
@@ -64,4 +56,4 @@ server.listen(port, hostname, function () {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
 
-server.close();
+//server.close();

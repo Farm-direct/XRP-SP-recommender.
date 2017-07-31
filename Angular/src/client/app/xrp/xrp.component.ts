@@ -22,7 +22,6 @@ export class XRPComponent {
 
   ngOnInit(): void {
     this.getHistory();
-    this.getTranscationDetails();
   }
   public getHistory() {
 
@@ -30,9 +29,6 @@ export class XRPComponent {
       console.log("response: ", history);
       this.buyingHistory = history;
       console.log(this.buyingHistory.password);
-      // if (this.userName == this.buyingHistory.username && this.password == this.buyingHistory.password) {
-      //   this.router.navigate([`/`]);
-      // }
     });
   }
   public getTranscationDetails() {
@@ -42,24 +38,12 @@ export class XRPComponent {
     this.transcationDetails.xrpPerSellingPrice = 0;
     console.log("transcation object:",this.transcationDetails);
     this.xrpservice.getAllTranscationDetails(this.transcationDetails).subscribe(details => {
-      console.log("response: ", details);
+      console.log("response a: ", details);
       this.responseTranscationDetails = Object.assign({}, details);;
-      //console.log(this.transcationDetails1);
-      // if (this.userName == this.buyingHistory.username && this.password == this.buyingHistory.password) {
-      //   this.router.navigate([`/`]);
-      // }
     });
   }
   public authentication() {
     console.log("Inside the authentication method");
     console.log(this.transcationDetails.quantity,this.transcationDetails.xrpPerBuyingPrice,this.transcationDetails.profit)
-    // if (this.userName == 'asd' && this.password == 'qwe') {
-    //   console.log(this.userName + " and password: " + this.password);
-    //   this.router.navigate([`/`]);
-
-    // }
-    // else {
-    //   this.router.navigate([`/`])
-    // }
   }
 }

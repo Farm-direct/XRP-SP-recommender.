@@ -3,19 +3,19 @@
   <br>
   <div class="container">
     <label><b>Quantity</b></label>
-    <input type="number" placeholder="Enter Quantity" name="Quantity" [(ngModel)]=transcationDetails.quantity style="margin-left: 44px; margin-top: 20px;" required>
+    <input type="number" placeholder="Enter Quantity" name="Quantity" [(ngModel)]=transcationDetails.quantity style="margin-left: 82px; margin-top: 20px;" required>
   </div>
   <br>
 
   <div>
-    <label><b>Per Price</b></label>
-    <input type="number" placeholder="Enter perPrice" name="perPrice" [(ngModel)]=transcationDetails.xrpPerBuyingPrice style="margin-left: 40px; " required>
+    <label><b>Price Per XRP</b></label>
+    <input type="number" placeholder="Enter PriceperXRP" name="perPrice" [(ngModel)]=transcationDetails.xrpPerBuyingPrice style="margin-left: 40px; " required>
     <br>
     <div>
       <label><b>Profit</b></label>
-      <input type="number" placeholder="Enter Profit" name="profit" [(ngModel)]=transcationDetails.profit style="margin-left: 67px; margin-top: 20px;" required>
+      <input type="number" placeholder="Enter Profit" name="profit"  [(ngModel)]=transcationDetails.profit style="margin-left: 105px; margin-top: 20px;" required>
       <br>
-      <button style="margin-left: 168px; margin-top: 20px;" (click)="getTranscationDetails()">Submit</button>
+      <button style="margin-left: 200px; margin-top: 20px;" (click)="getTranscationDetails()">Submit</button>
     </div>
   </div>
 </form>
@@ -23,7 +23,7 @@
 <div>
 
 <p>
-  Total Cost(buying):{{transcationDetails.totalBuyingCost}}<br><br>
-  Total Cost(Selling): {{transcationDetails.totalSellingcost}}<br><br>
-  SP Per XRP:{{transcationDetails.xrpPerSellingPrice}}
+  Total Cost(buying):{{responseTranscationDetails.totalBuyingCost}}<br><br>
+  Total Cost(Selling): {{responseTranscationDetails.totalSellingcost}}<br><br>
+  SP Per XRP:{{responseTranscationDetails.xrpPerSellingPrice}}
 </div>
