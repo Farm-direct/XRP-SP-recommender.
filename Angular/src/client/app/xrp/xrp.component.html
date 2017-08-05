@@ -1,29 +1,74 @@
-<form name="form">
+<form name="form" ngNativeValidate>
   <br>
   <br>
   <div class="container">
-    <label><b>Quantity</b></label>
-    <input type="number" placeholder="Enter Quantity" name="Quantity" [(ngModel)]=transcationDetails.quantity style="margin-left: 82px; margin-top: 20px;" required>
-  </div>
-  <br>
-
-  <div>
-    <label><b>Price Per XRP</b></label>
-    <input type="number" placeholder="Enter PriceperXRP" name="perPrice" [(ngModel)]=transcationDetails.xrpPerBuyingPrice style="margin-left: 40px; " required>
-    <br>
     <div>
-      <label><b>Profit</b></label>
-      <input type="number" placeholder="Enter Profit" name="profit"  [(ngModel)]=transcationDetails.profit style="margin-left: 105px; margin-top: 20px;" required>
-      <br>
-      <button style="margin-left: 200px; margin-top: 20px;" (click)="getTranscationDetails()">Submit</button>
+      <input type="radio" name="toggle" (change)="changeRadio(true)" style="margin-left: 250px;" checked/><label><b>&nbsp;Average &nbsp;&nbsp;</b></label>
+      <input type="radio" name="toggle" (change)="changeRadio(false)" style="margin-left:45px" /><label><b>&nbsp;Price</b></label><br><br>
     </div>
+    <!--Div for average calculation-->
+    <div *ngIf="isAverageChecked">
+      <div id="row1">
+        <div id="column1">
+          <label><b>Quantity</b></label>
+          <input type="number" placeholder="Enter Quantity" value="0" name="quantityForAvg" [(ngModel)]="avgQuantity" required>
+          <br>
+
+          <label><b>Price</b></label>
+          <input type="number" placeholder="Enter Price Per XRP" name="perPriceForAvg" [(ngModel)]="avgPrice" required></div>
+        <div id="column2" *ngFor="let details of displayAvgDetails">
+          <tr>
+            <th>Quantity</th>
+            <th>Per Price</th>
+          </tr>
+          <tr>
+            <td>{{details.quantity}}</td>
+            <td>{{details.price}}</td>
+          </tr>
+        </div>
+        
+      </div>
+      <div style="padding-left: 250px">
+        <button style="margin-right: 5px" (click)="add()">Add</button>
+        <button style="margin-right: 5px" (click)="reset()">Reset</button>
+        <button (click)="submit()">Submit</button>
+      </div>
+      <h5 >Average:{{average}}</h5>
+    </div>
+    <!--Div for price calculation-->
+    <div id="row1" *ngIf="isPriceChecked">
+      <div>
+        <div id="column1">
+          <div>
+            <label><b>Quantity</b></label>
+            <input type="number" placeholder="Enter Quantity" name="Quantity" [(ngModel)]=transcationDetails.quantity style="margin-left: 82px; margin-top: 20px;"
+              required><br>
+          </div>
+          <div>
+            <label><b>Price Per XRP</b></label>
+            <input type="number" placeholder="Enter PriceperXRP" name="perPrice" [(ngModel)]=transcationDetails.xrpPerBuyingPrice style="margin-left: 40px;margin-top: 20px;"
+              required>
+            <br>
+            <div>
+              <label><b>Profit</b></label>
+              <input type="number" placeholder="Enter Profit" name="profit" [(ngModel)]=transcationDetails.profit style="margin-left: 105px; margin-top: 20px;"
+                required>
+              <br>
+              <button style="margin-left: 200px; margin-top: 20px;" (click)="getTranscationDetails()">Submit</button>
+            </div>
+          </div>
+        </div>
+        <div id="column2">
+          <div>
+            <p>
+              Total Cost(buying):{{responseTranscationDetails.totalBuyingCost}}<br><br> Total Cost(Selling): {{responseTranscationDetails.totalSellingcost}}<br><br>              SP Per XRP:{{responseTranscationDetails.xrpPerSellingPrice}}
+            </p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
   </div>
 </form>
-
-<div>
-
-<p>
-  Total Cost(buying):{{responseTranscationDetails.totalBuyingCost}}<br><br>
-  Total Cost(Selling): {{responseTranscationDetails.totalSellingcost}}<br><br>
-  SP Per XRP:{{responseTranscationDetails.xrpPerSellingPrice}}
-</div>
