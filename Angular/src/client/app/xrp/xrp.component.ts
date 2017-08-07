@@ -21,17 +21,35 @@ export class XRPComponent {
   public responseTranscationDetails: TranscationDetails = <TranscationDetails>{}
   public isPriceChecked: boolean = false;
   public isAverageChecked: boolean = true;
-  public avgQuantity: number;
-  public avgPrice: number;
+  public avgQuantity: number = 0;
+  public avgPrice: number=0;
   public avgdetails: Array<AverageDetails> = []
   public displayAvgDetails: Array<AverageDetails> = []
   public totalCost: number = 0;
   public totalQuantity: number = 0;
   public average: number = 0;
 
-
+  /**
+   * On page Load-
+   * 1.Get the previous transaction details from the localStorage
+   * 2.Calculate the Average
+   * 
+   * @memberof XRPComponent
+   */
   ngOnInit(): void {
     this.getHistory();
+    localStorage.setItem("totalCost", String(0))
+    localStorage.setItem("totalQuantity", String(0))
+    this.getlocalStorage("avg");
+    this.getAverage(true);
+  }
+  public getlocalStorage(key: string) {
+    this.displayAvgDetails = Object.assign([], JSON.parse(localStorage.getItem(key)))
+  }
+  public writeToLocalStorage(key: string) {
+
+    localStorage.setItem(key, JSON.stringify(this.avgdetails))
+    console.log(key + ":", localStorage.getItem(key));
   }
   public getHistory() {
 
@@ -68,71 +86,54 @@ export class XRPComponent {
       this.isPriceChecked = true;
     }
   }
+  public getAverage(onPageLoad: boolean) {
+    if (onPageLoad) {
+      for (let details of this.avgdetails) {
+        this.totalCost += (details.price * details.quantity)
+        this.totalQuantity+=details.quantity
+      }
+      localStorage.setItem("totalCost", String(this.totalCost))
+      localStorage.setItem("totalQuantity", String(this.totalQuantity))
+
+    }
+    else 
+    {
+      this.totalCost = Number(localStorage.getItem("totalCost"));
+      console.log(this.avgQuantity,this.avgPrice);
+      console.log(this.totalCost,this.totalQuantity);
+      
+      this.totalCost += (this.avgQuantity * this.avgPrice);
+      localStorage.setItem("totalCost", String(this.totalCost))
+      this.totalQuantity = Number(localStorage.getItem("totalQuantity"));
+      this.totalQuantity += this.avgQuantity;
+      localStorage.setItem("totalQuantity", String(this.totalQuantity))
+      this.average = Number((this.totalCost / this.totalQuantity).toFixed(2));
+      //this.average.isNan()
+    }
+  }
   public add() {
-    this.totalCost += this.avgPrice;
-    this.totalQuantity += this.avgQuantity;
+    this.avgdetails = Object.assign([], JSON.parse(localStorage.getItem("avg")))
     this.avgdetails.push(new AverageDetails(this.avgQuantity, this.avgPrice))
     console.log(this.avgdetails);
+    this.getAverage(false);
     this.avgQuantity = 0;
     this.avgPrice = 0;
     console.log(JSON.stringify(this.avgdetails));
-    localStorage.setItem("avg", JSON.stringify(this.avgdetails))
-    console.log("avg:",localStorage.getItem("avg"));
-
-
-    //for (let entry of ) {
-    //console.log(entry); // 1, "string", false
+    this.writeToLocalStorage("avg");
+    this.getlocalStorage("avg");
   }
-  // localStorage.setItem();
-  // //localStorage.setItem("quantity", "5");
-  // console.log("Add:",localStorage.getItem());
+
 
 
   public reset() {
     console.log("Reset");
-  }
-  public submit() {
-    console.log("submit");
-    
-    
-    // for (let details of this.avgdetails) {
-    //   localStorage.setItem("quantity", String(details.quantity))
-    // }   
-    //console.log("Add:", localStorage.getItem("avg"));
-    /*console.log("After parsing:", JSON.parse(localStorage.getItem("avg")));
-    this.displayAvgDetails = Object.assign([], JSON.parse(localStorage.getItem("avg")))
+    let decision = alert("Wo Teri bhens ki aankh---Do you want to remove the all the transcation---")
+    console.log(decision);
 
-    this.average = Number((this.totalCost / this.totalQuantity).toFixed(2));
-    localStorage.setItem("AvgNew", JSON.stringify({ quantity: this.avgQuantity, price: this.avgPrice }))
-    localStorage.setItem("Random", "random");
-    localStorage.setItem("random", "random1");
-    this.setobj("avgNew", this.avgdetails);
-
-
-    //alert(localStorage.getItem("Random"))
-    //alert(localStorage.getItem("random"))
-    console.log("getobj",
-      (this.getobj("avgNew")))
-    let avgjson = {"quantity":0,"price":0}
-    avgjson["quantity"] = this.avgQuantity;
-    avgjson["price"] = this.avgPrice
-    console.log("json",JSON.stringify(avgjson));
-    localStorage.setItem("json", JSON.stringify(this.avgdetails))
-    
-    this.displayAvgDetails = Object.assign([], JSON.parse(localStorage.getItem("json")))
-    console.log(this.displayAvgDetails);
-    
-    alert(this.displayAvgDetails)*/
+    localStorage.removeItem("avg")
+    localStorage.removeItem("totalCost")
+    localStorage.removeItem("totalQuantity")
+    location.reload();
   }
-  public setobj(key: any, obj: any) {
-    Storage.prototype.setObj = function () {
-      return this.setItem(key, JSON.stringify(obj))
-    }
 
-  }
-  public getobj(key: any): any {
-    Storage.prototype.getObj = function () {
-      return JSON.parse(this.getItem(key))
-    }
-  }
 }
