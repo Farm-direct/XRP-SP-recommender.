@@ -5,9 +5,10 @@ import { LoginRoutingModule } from './login-routing.module';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  imports: [CommonModule, LoginRoutingModule,FormsModule],
+  imports: [CommonModule, LoginRoutingModule, FormsModule],
   declarations: [LoginComponent],
   exports: [LoginComponent],
-//   providers: [AboutService]
+  //   providers: [AboutService]
 })
 export class LoginModule { }
+

@@ -1,7 +1,7 @@
 import { join } from 'path';
 
 import { SeedConfig } from './seed.config';
-// import { ExtendPackages } from './seed.config.interfaces';
+import { ExtendPackages } from './seed.config.interfaces';
 
 /**
  * This class extends the basic seed configuration, allowing for project specific overrides. A few examples can be found
@@ -11,6 +11,9 @@ export class ProjectConfig extends SeedConfig {
 
   PROJECT_TASKS_DIR = join(process.cwd(), this.TOOLS_DIR, 'tasks', 'project');
 
+  FONTS_DEST  =  `${this.APP_DEST}/fonts`;
+  FONTS_SRC  =  [
+    'node_modules/bootstrap/dist/fonts/**']
   constructor() {
     super();
     // this.APP_TITLE = 'Put name of your app here';
@@ -22,9 +25,25 @@ export class ProjectConfig extends SeedConfig {
     // Add `NPM` third-party libraries to be injected/bundled.
     this.NPM_DEPENDENCIES = [
       ...this.NPM_DEPENDENCIES,
-      // {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
+       {src: 'jquery/dist/jquery.min.js', inject: 'libs'},
       // {src: 'lodash/lodash.min.js', inject: 'libs'},
+      { src: 'bootstrap/dist/js/bootstrap.min.js', inject: 'libs' },
+      { src: 'font-awesome/css/font-awesome.min.css', inject: true },
+      { src: 'bootstrap/dist/css/bootstrap.min.css', inject: true }, // inject into css section
+
+      { src: 'primeng/resources/primeng.min.css', inject: true },
+      { src: 'primeng/resources/themes/omega/theme.css', inject: true }
+
     ];
+    let additionalPackages: ExtendPackages[] = [{
+name: 'primeng',
+path: 'node_modules/primeng',
+packageMeta: {
+defaultExtension: 'js'
+}
+}];
+
+this.addPackagesBundles(additionalPackages); 
 
     // Add `local` third-party libraries to be injected/bundled.
     this.APP_ASSETS = [

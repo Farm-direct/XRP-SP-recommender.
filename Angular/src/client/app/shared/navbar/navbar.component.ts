@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MenuItem } from "primeng/primeng";
 
 /**
  * This class represents the navigation bar component.
@@ -9,4 +10,6 @@ import { Component } from '@angular/core';
   templateUrl: 'navbar.component.html',
   styleUrls: ['navbar.component.css'],
 })
-export class NavbarComponent { }
+export class NavbarComponent {
+  
+ }
