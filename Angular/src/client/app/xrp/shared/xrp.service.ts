@@ -16,19 +16,17 @@ export class XrpService {
     }
 
     public getAllTranscationDetails(transcationDetails: any): Observable<any> {
-        console.log("Inside the service: ", transcationDetails)
+        console.log('Inside the service: ', transcationDetails);
         let body = {
-            "quantity": transcationDetails.quantity,
-            "xrpPerBuyingPrice": transcationDetails.xrpPerBuyingPrice,
-            "totalBuyingCost": 0,
-            "profit": transcationDetails.profit,
-            "totalSellingcost": 0,
-            "xrpPerSellingPrice": 0
+            'quantity': transcationDetails.quantity,
+            'xrpPerBuyingPrice': transcationDetails.xrpPerBuyingPrice,
+            'totalBuyingCost': 0,
+            'profit': transcationDetails.profit,
+            'totalSellingcost': 0,
+            'xrpPerSellingPrice': 0
         };
         return this.http.post('http://localhost:4000/xrp', body).map((response: any) => {
-            console.log("response:",response.json());
+            console.log('response:',response.json());
             return response.json();
         });
-    }
-
-}
+    }}

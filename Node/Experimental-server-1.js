@@ -5,7 +5,7 @@ var express = require('express'),
 var fs = require("fs");
 
 var hostname = 'localhost';
-var port = 4000;
+var port = process.env.port;
 
 var app = express();
 
@@ -42,7 +42,7 @@ app.post('/xrp', function (req, res, next) {
   xrpPerSellingPrice = (((totalSellingcost * 1) / (req.body.quantity * 1)).toFixed(2)) * 1;
   //Details.quantity = req.body.quantity;
   var response = {
-    "quantity": "(req.body.quantity)",
+    "quantity": (req.body.quantity),
     "xrpPerBuyingPrice": req.body.xrpPerBuyingPrice,
     "totalBuyingCost": totalBuyingCost,
     "profit": req.body.profit,
@@ -63,15 +63,34 @@ app.post('/xrp', function (req, res, next) {
     if (err) throw err;
     console.log('Saved!');
   });
-  fs.readFile((__dirname + "\\History.txt"), function (err, data) {
+  fs.readFile((__dirname + "\\Words.txt"), function (err, data) {
     if (err) {
       console.log(err)
     }
     else
-      var quantity = data.toString();
+      var quantity = data.toString().split(' ');
+    fs.writeFile(__dirname + '\\parsedwordsfromfile.txt', quantity + "\n", { flag: 'a+' }, function (err) {
+      if (err) throw err;
+    })
+    console.log(quantity);
+
     //console.log(JSON.parse(data))
   })
- // var quantity = this.data
+  var wordsHashMap = {};
+  for (words in quantity) {
+    ///if word does not exists then insert in the hash map
+    //if (quantity[words] in wordsHashMap) {
+    {
+      wordsHashMap[words] = wordsHashMap[words] ? wordsHashMap[words]+1 : 1
+     }
+    ///else increase the count
+    //console.log(array[i]);
+    
+  }
+  fs.writeFile(__dirname + '\\parsedwordsfromfile.txt', wordsHashMap + "\n", { flag: 'a+' }, function (err) {
+    if (err) throw err;
+  })  
+  // var quantity = this.data
   res.send(response)
 })
 

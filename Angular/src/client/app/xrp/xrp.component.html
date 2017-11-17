@@ -4,8 +4,28 @@
   <br>
   <div class="container">
     <div>
+        <input type="text" name="filterText" [(ngModel)]="filterText" (keyup.enter)="doSomething(filterText)" >
+        <div *ngFor="let option of (availableList);let i = index">
+         
+            <label>
+                <p   (click)="additems(option,i)" >
+                  
+                {{option.name}}
+                </p>
+            </label>
+
+
+        </div>
+        <label>selected list:</label>
+        <div *ngFor="let option of selectedList;let i = index">
+            <p   (click)="removeitems(option,i)" >
+                {{option.name}}
+                </p>
+        
+        </div>
       <input type="radio" name="toggle" (change)="changeRadio(true)" style="margin-left: 250px;" checked/><label><b>&nbsp;Average &nbsp;&nbsp;</b></label>
       <input type="radio" name="toggle" (change)="changeRadio(false)" style="margin-left:45px" /><label><b>&nbsp;Price</b></label><br><br>
+    <h3>{{message}}</h3>
     </div>
     <!--Div for average calculation-->
     <div *ngIf="isAverageChecked">
@@ -71,5 +91,12 @@
 
     </div>
 
+    <p-pickList [source]="availableList" [target]="selectedList" filterBy="name" sourceHeader="Available" targetHeader="Selected" [showSourceControls]="False" [showTargetControls]="false">
+        <ng-template let-car pTemplate="item">
+            <div class="ui-helper-clearfix">
+                <div style="font-size:14px;float:right;margin:15px 5px 0 0">{{car.name}}</div>
+            </div>
+        </ng-template>
+    </p-pickList>
   </div>
 </form>
