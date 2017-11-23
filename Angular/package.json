@@ -47,6 +47,10 @@
     "compodoc": "./node_modules/.bin/compodoc -p src/client/tsconfig.json",
     "serve.compodoc": "./node_modules/.bin/compodoc -s"
   },
+  "engines": {
+    "node": "~6.10.3",
+    "npm":"~3.3.12"
+},
   "author": "Minko Gechev <mgechev>",
   "license": "MIT",
   "devDependencies": {

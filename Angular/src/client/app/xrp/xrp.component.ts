@@ -7,7 +7,7 @@ import { PaginatorModule } from 'primeng/primeng';
 import { Car } from './Details';
 
 /**
- * This class represents the lazy loaded AboutComponent.
+ * This class represents the lazy  loaded AboutComponent.
  */
 @Component({
   moduleId: module.id,
