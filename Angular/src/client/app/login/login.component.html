@@ -1,17 +1,51 @@
-<div>
-    <h4>Invalid Login</h4>
-    <button type="button" class="btn btn-danger">Danger</button>
-</div>
-<div class="dropdown">
-    <p>Dropdown</p>
-    <div class="dropdown-content">
-      <a href="#">Link 1</a>
-      <a href="#">Link 2</a>
-      <a href="#">Link 3</a>
+<script>
+  function amIclicked(e, element)
+{
+    e = e || event;
+    var target = e.target || e.srcElement;
+    if(target.id==element.id)
+        return true;
+    else
+        return false;
+}
+function oneClick(event, element)
+{
+    if(amIclicked(event, element))
+    {
+        alert('One is clicked');
+    }
+}
+function twoClick(event, element)
+{
+    if(amIclicked(event, element))
+    {
+        alert('Two is clicked');
+    }
+}
+</script>
+<style>
+#one
+{
+    width: 200px;
+    height: 300px;
+    background-color: red;
+}
+#two
+{
+    width: 50px;
+    height: 70px;
+    background-color: yellow;
+    margin-left: 10; 
+    margin-top: 20;
+}
+
+</style>
+
+
+
+<div id="one" onclick="oneClick(event, this);">
+    one
+    <div id="two" onclick="twoClick(event, this);">
+        two
     </div>
-  </div>
-
-  <input type="text" #box (keyup.enter)="onEnter(box.value)">
-
-
-  
+</div>

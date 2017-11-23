@@ -1,0 +1,25 @@
+{
+    "name": "experimentalserver1",
+    "version": "1.0.0",
+    "description": "A sample Node.js app using Express 4",
+    "engines": {
+        "node": "6.10.3"
+    },
+    "main": "Experimental-server-1.js",
+    "scripts": {
+        "start": "node Experimental-server-1.js"
+    },
+    "dependencies": {
+        "express": "4.15.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "keywords": [
+        "node",
+        "heroku",
+        "express"
+    ],
+    "license": "MIT"
+}
